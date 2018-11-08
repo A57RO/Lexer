@@ -1,20 +1,27 @@
 public class WordReader {
 	private final String word;
+	private final boolean ignoreCase;
 
-	// TODO Задача 1: Добавить параметр ignoreCase — чувствительность к регистру
-	public WordReader(String word) {
+	public WordReader(String word, boolean ignoreCase) {
 		super();
-		this.word = word;
+		if (ignoreCase)
+			this.word = word.toLowerCase();
+		else
+			this.word = word;
+		this.ignoreCase = ignoreCase;
 	}
 
 	public Token tryReadToken(String input) {
+		if (ignoreCase)
+			input = input.toLowerCase();
+
 		if (input.startsWith(word))
 			return new Token("kw", word);
 		return null;
 	}
 
 	public static void main(String[] args) {
-		WordReader reader = new WordReader("hello");
+		WordReader reader = new WordReader("hello", false);
 		System.out.println("Testing WordReader...");
 		test(reader, "", null);
 		test(reader, "H", null);
